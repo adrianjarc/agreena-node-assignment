@@ -38,6 +38,9 @@ $ yarn install
 ## Running the app
 
 ```bash
+# start database
+$ docker compose --env-file .env.local up -d
+
 # development
 $ yarn run start
 
