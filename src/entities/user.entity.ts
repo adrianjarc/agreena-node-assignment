@@ -19,7 +19,7 @@ export class UserEntity {
   @UpdateDateColumn({
     type: 'timestamp',
   })
-  readonly updatedAt: string;
+  readonly updatedAt: Date;
 
   @Column('text')
   username: string;
