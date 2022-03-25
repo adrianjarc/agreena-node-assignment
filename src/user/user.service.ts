@@ -2,8 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRepository } from './user.repository';
 import { UserCreateDto } from './dto/user.create.dto';
-import { UserEntity } from '../entities/user.entity';
+import { UserEntity, UserRelations } from '../entities/user.entity';
 import { ConfigService } from '@nestjs/config';
+import { UserDetailsDto } from './dto/user.details.dto';
 
 @Injectable()
 export class UserService {
@@ -13,6 +14,14 @@ export class UserService {
     @InjectRepository(UserRepository)
     private readonly userRepository: UserRepository,
   ) {}
+
+  async getUserWithCertificates(id: string): Promise<UserDetailsDto> {
+    return UserDetailsDto.fromUserEntity(
+      await this.userRepository.getById(id, {
+        relations: ['carbonCertificates'],
+      }),
+    );
+  }
 
   async createUser(user: UserCreateDto): Promise<UserEntity> {
     return await this.userRepository.createAndSave(
@@ -25,7 +34,12 @@ export class UserService {
     return this.userRepository.findOne({ username });
   }
 
-  async getUserById(id: string): Promise<UserEntity> {
-    return this.userRepository.getById(id);
+  async getUserById(
+    id: string,
+    options: {
+      relations?: UserRelations[];
+    } = {},
+  ): Promise<UserEntity> {
+    return this.userRepository.getById(id, options);
   }
 }
