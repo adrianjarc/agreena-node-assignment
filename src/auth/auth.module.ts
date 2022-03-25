@@ -8,9 +8,14 @@ import baseConfiguration from '../config/base-configuration';
 import jwtConfiguration from '../config/jwt-configuration';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
+import { JwtStrategy } from './jwt.strategy';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      envFilePath: getEnvPath(),
+      load: [baseConfiguration, jwtConfiguration],
+    }),
     PassportModule,
     JwtModule.registerAsync({
       imports: [
@@ -28,6 +33,7 @@ import { JwtModule } from '@nestjs/jwt';
           },
           verifyOptions: {
             issuer: configService.get('api'),
+            ignoreExpiration: false,
           },
         };
       },
@@ -36,6 +42,6 @@ import { JwtModule } from '@nestjs/jwt';
     UserModule,
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, JwtStrategy],
 })
 export class AuthModule {}
