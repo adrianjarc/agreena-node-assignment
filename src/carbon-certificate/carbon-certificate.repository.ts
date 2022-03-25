@@ -28,21 +28,21 @@ export class CarbonCertificateRepository extends Repository<CarbonCertificateEnt
     filters: {
       status?: CarbonCertificateStatusEnum;
       country?: string;
-      owner?: string;
+      ownerId?: string;
     } = {},
     count = false,
   ): Promise<PaginatedListInterface<CarbonCertificateEntity>> {
     const alias = 'carbonCertificate';
     const query = this.createQueryBuilder(alias);
 
-    if (filters.owner) {
-      query.andWhere(`${alias}.ownerId = : ownerId`, {
-        ownerId: filters.owner,
+    if (filters.ownerId) {
+      query.andWhere(`${alias}.ownerId = :ownerId`, {
+        ownerId: filters.ownerId,
       });
     }
 
     if (filters.status) {
-      query.andWhere(`${alias}.status = :status)`, {
+      query.andWhere(`${alias}.status = :status`, {
         status: filters.status,
       });
     }
