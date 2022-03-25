@@ -4,16 +4,16 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
+import { AuthModule } from './auth/auth.module';
 import databaseConfiguration from './config/database-configuration';
+import getEnvPath from './utils/get-env-path';
 
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
       imports: [
         ConfigModule.forRoot({
-          envFilePath: `.env.${
-            process.env.STAGE ? process.env.STAGE : 'local'
-          }`,
+          envFilePath: getEnvPath(),
           load: [databaseConfiguration],
         }),
       ],
@@ -37,6 +37,7 @@ import databaseConfiguration from './config/database-configuration';
       inject: [ConfigService],
     }),
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
