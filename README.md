@@ -14,9 +14,9 @@ Create the API containing endpoints:
 - Unique ID
 - Country
 - Status:
-  - `available` (*no owner*)
-  - `owned` (*owner is present and certificate hasn't been transferred*)
-  - `transferred` (*owner is present and certificate has been transferred from one owner to another*)
+    - `available` (*no owner*)
+    - `owned` (*owner is present and certificate hasn't been transferred*)
+    - `transferred` (*owner is present and certificate has been transferred from one owner to another*)
 - Owner (*relation to existing user, can be empty*)
 
 ##### Requirements
@@ -27,3 +27,36 @@ Create the API containing endpoints:
 - Tests have to be included
 
 ### Good luck!
+
+## Installation
+This project is using yarn@3.2.0
+
+```bash
+$ yarn install
+```
+
+## Running the app
+
+```bash
+# development
+$ yarn run start
+
+# watch mode
+$ yarn run start:dev
+
+# production mode
+$ yarn run start:prod
+```
+
+## Test
+
+```bash
+# unit tests
+$ yarn run test
+
+# e2e tests
+$ yarn run test:e2e
+
+# test coverage
+$ yarn run test:cov
+```
