@@ -34,14 +34,14 @@ export class CarbonCertificateService {
       ['status', 'country'].includes(x[0]),
     );
 
-    let owner: string | undefined;
+    let ownerId: string | undefined;
 
     // If no status in filters or if status is not available, add owner id to filter by
     if (
       !filters.status ||
       filters.status !== CarbonCertificateStatusEnum.AVAILABLE
     ) {
-      owner = options.user.id;
+      ownerId = options.user.id;
     }
 
     return this.carbonCertificateRepository.paginate(
@@ -51,8 +51,8 @@ export class CarbonCertificateService {
       },
       {
         ...filters,
-        status: filters.status ?? CarbonCertificateStatusEnum.AVAILABLE,
-        owner,
+        status: filters.status ? filters.status : undefined,
+        ownerId,
       },
       options?.count,
     );
