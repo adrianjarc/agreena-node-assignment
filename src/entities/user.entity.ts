@@ -2,11 +2,14 @@ import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { EntitiesEnum } from '../common/enum/entities.enum';
+import { CarbonCertificateEntity } from './carbon-certificate.entity';
 
-@Entity('user')
+@Entity('users')
 export class UserEntity {
   @PrimaryGeneratedColumn('uuid')
   readonly id: string;
@@ -26,4 +29,7 @@ export class UserEntity {
 
   @Column('text')
   password: string;
+
+  @OneToMany(EntitiesEnum.CARBON_CERTIFICATE, 'owner')
+  carbonCertificates?: CarbonCertificateEntity[];
 }

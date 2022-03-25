@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { CarbonCertificateModule } from './carbon-certificate/carbon-certificate.module';
 import databaseConfiguration from './config/database-configuration';
 import getEnvPath from './utils/get-env-path';
 
@@ -38,6 +39,7 @@ import getEnvPath from './utils/get-env-path';
     }),
     UserModule,
     AuthModule,
+    CarbonCertificateModule,
   ],
   controllers: [AppController],
   providers: [AppService],
