@@ -1,4 +1,4 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { EntityNotFoundError, EntityRepository, Repository } from 'typeorm';
 import { CarbonCertificateEntity } from '../entities/carbon-certificate.entity';
 import {
   PaginatedListInterface,
@@ -6,9 +6,23 @@ import {
 } from '../common/interfaces/list.interfaces';
 import { paginateQueryBuilder } from '../common/database/list.helper';
 import { CarbonCertificateStatusEnum } from '../common/enum/carbon-certificate-status.enum';
+import { NotFoundException } from '@nestjs/common';
+import { UserEntity } from '../entities/user.entity';
 
 @EntityRepository(CarbonCertificateEntity)
 export class CarbonCertificateRepository extends Repository<CarbonCertificateEntity> {
+  async getById(id: string): Promise<CarbonCertificateEntity> {
+    try {
+      return await this.findOneOrFail({ id });
+    } catch (e) {
+      if (e instanceof EntityNotFoundError) {
+        throw new NotFoundException('Carbon certificate not found');
+      }
+
+      throw e;
+    }
+  }
+
   async paginate(
     pagination: PaginationOptionsInterface,
     filters: {
@@ -43,5 +57,18 @@ export class CarbonCertificateRepository extends Repository<CarbonCertificateEnt
       filters,
       ...(await paginateQueryBuilder(query, pagination, count)),
     };
+  }
+
+  async transfer(
+    certificate: CarbonCertificateEntity,
+    toUser: UserEntity,
+  ): Promise<CarbonCertificateEntity> {
+    certificate.ownerId = toUser.id;
+
+    certificate = await this.save(certificate);
+
+    certificate.owner = toUser;
+
+    return certificate;
   }
 }

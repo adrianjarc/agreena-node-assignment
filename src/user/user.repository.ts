@@ -6,7 +6,7 @@ import { NotFoundException } from '@nestjs/common';
 export class UserRepository extends Repository<UserEntity> {
   async getById(id: string): Promise<UserEntity> {
     try {
-      return this.findOneOrFail({ id });
+      return await this.findOneOrFail({ id });
     } catch (e) {
       if (e instanceof EntityNotFoundError) {
         throw new NotFoundException('User not found');

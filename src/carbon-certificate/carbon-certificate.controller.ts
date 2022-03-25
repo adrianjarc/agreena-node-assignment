@@ -1,4 +1,12 @@
-import { Controller, Get, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { CarbonCertificateService } from './carbon-certificate.service';
 import { PaginatedList, PaginatedListQuery } from '../common/database/list.dto';
 import { CarbonCertificateShortDto } from './dto/carbon-certificate.short.dto';
@@ -6,6 +14,8 @@ import { CarbonCertificateFiltersDto } from './dto/carbon-certificate.filters.dt
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { User } from '../common/decorator/user';
 import { UserEntity } from '../entities/user.entity';
+import { IdParamsDto } from '../common/dto/id.params.dto';
+import { CarbonCertificateTransferDto } from './dto/carbon-certificate.transfer.dto';
 
 @Controller('carbon-certificate')
 @UseGuards(JwtAuthGuard)
@@ -33,5 +43,14 @@ export class CarbonCertificateController {
       List,
       CarbonCertificateShortDto.fromCarbonCertificateEntity,
     );
+  }
+
+  @Patch('transfer/:id')
+  async transferCertificate(
+    @Param() params: IdParamsDto,
+    @Body() data: CarbonCertificateTransferDto,
+    @User() user: UserEntity,
+  ): Promise<CarbonCertificateShortDto> {
+    return await this.carbonCertificateService.transfer(params.id, user, data);
   }
 }
