@@ -49,6 +49,9 @@ $ yarn run start:dev
 
 # production mode
 $ yarn run start:prod
+
+# stop database
+$ docker compose --env-file .env.local down
 ```
 
 ## Test
@@ -58,7 +61,12 @@ $ yarn run start:prod
 $ yarn run test
 
 # e2e tests
+# start database
+$ docker compose -f docker-compose.test.yml --env-file .env.test up -d
+# start E2E tests
 $ yarn run test:e2e
+# shut down database
+$ docker compose -f docker-compose.test.yml --env-file .env.test down
 
 # test coverage
 $ yarn run test:cov
