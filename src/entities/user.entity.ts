@@ -24,7 +24,9 @@ export class UserEntity {
   })
   readonly updatedAt: Date;
 
-  @Column('text')
+  @Column('text', {
+    unique: true,
+  })
   username: string;
 
   @Column('text')
