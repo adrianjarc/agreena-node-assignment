@@ -42,8 +42,8 @@ export class CarbonCertificateRepository extends Repository<CarbonCertificateEnt
     }
 
     if (filters.status) {
-      query.andWhere(`${alias}.status IN (:...statuses)`, {
-        statuses: filters.status,
+      query.andWhere(`${alias}.status = :status)`, {
+        status: filters.status,
       });
     }
 
@@ -64,6 +64,7 @@ export class CarbonCertificateRepository extends Repository<CarbonCertificateEnt
     toUser: UserEntity,
   ): Promise<CarbonCertificateEntity> {
     certificate.ownerId = toUser.id;
+    certificate.status = CarbonCertificateStatusEnum.TRANSFERRED;
 
     certificate = await this.save(certificate);
 

@@ -36,6 +36,7 @@ export class CarbonCertificateService {
 
     let owner: string | undefined;
 
+    // If no status in filters or if status is not available, add owner id to filter by
     if (
       !filters.status ||
       filters.status !== CarbonCertificateStatusEnum.AVAILABLE
