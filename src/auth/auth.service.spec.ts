@@ -6,8 +6,8 @@ import baseConfiguration from '../config/base-configuration';
 import jwtConfiguration from '../config/jwt-configuration';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { UserModule } from '../user/user.module';
 import { JwtStrategy } from './jwt.strategy';
+import { UserModuleMock } from '../user/test/user.module.mock';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -42,7 +42,7 @@ describe('AuthService', () => {
           },
           inject: [ConfigService],
         }),
-        UserModule,
+        UserModuleMock,
       ],
       providers: [AuthService, JwtStrategy],
     }).compile();

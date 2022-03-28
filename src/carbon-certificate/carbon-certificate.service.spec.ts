@@ -1,19 +1,24 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { CarbonCertificateService } from './carbon-certificate.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { getRepositoryToken } from '@nestjs/typeorm';
 import { CarbonCertificateRepository } from './carbon-certificate.repository';
-import { UserModule } from '../user/user.module';
+import { CarbonCertificateRepositoryMock } from './test/carbon-certificate.repository.mock';
+import { UserModuleMock } from '../user/test/user.module.mock';
 
 describe('CarbonCertificateService', () => {
   let service: CarbonCertificateService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      imports: [
-        TypeOrmModule.forFeature([CarbonCertificateRepository]),
-        UserModule,
+      imports: [UserModuleMock],
+      providers: [
+        CarbonCertificateService,
+
+        {
+          provide: getRepositoryToken(CarbonCertificateRepository),
+          useClass: CarbonCertificateRepositoryMock,
+        },
       ],
-      providers: [CarbonCertificateService],
     }).compile();
 
     service = module.get<CarbonCertificateService>(CarbonCertificateService);

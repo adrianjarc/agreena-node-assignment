@@ -1436,6 +1436,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/uuid@npm:^8.3.4":
+  version: 8.3.4
+  resolution: "@types/uuid@npm:8.3.4"
+  checksum: 6f11f3ff70f30210edaa8071422d405e9c1d4e53abbe50fdce365150d3c698fe7bbff65c1e71ae080cbfb8fded860dbb5e174da96fdbbdfcaa3fb3daa474d20f
+  languageName: node
+  linkType: hard
+
 "@types/yargs-parser@npm:*":
   version: 21.0.0
   resolution: "@types/yargs-parser@npm:21.0.0"
@@ -1868,6 +1875,7 @@ __metadata:
     "@types/node": ^16.0.0
     "@types/passport-jwt": ^3.0.6
     "@types/supertest": ^2.0.11
+    "@types/uuid": ^8.3.4
     "@typescript-eslint/eslint-plugin": ^5.0.0
     "@typescript-eslint/parser": ^5.0.0
     bcrypt: ^5.0.1
@@ -1895,6 +1903,7 @@ __metadata:
     tsconfig-paths: ^3.10.1
     typeorm: 0.2
     typescript: ^4.3.5
+    uuid: ^8.3.2
   languageName: unknown
   linkType: soft
 
