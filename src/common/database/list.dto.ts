@@ -1,3 +1,4 @@
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform, Type } from 'class-transformer';
 import {
   Allow,
@@ -7,7 +8,6 @@ import {
   Min,
   ValidateNested,
 } from 'class-validator';
-
 import {
   GenericListInterface,
   ListFilterType,
@@ -20,6 +20,12 @@ export class GenericListQuery {
   @Type(() => Number)
   @IsInt()
   @IsOptional()
+  @ApiPropertyOptional({ description: 'Items per page' })
+  readonly limit?: number;
+
+  @ApiPropertyOptional({
+    description: 'Order by many fields with ([+-]{fieldName},)+',
+  })
   @Transform(({ value }): ListOrderType => {
     return value
       ? value.split(',').map((i: string) => {
@@ -43,13 +49,19 @@ export class GenericList<DtoType> {
   readonly items: DtoType[];
 
   @IsInt()
+  @ApiProperty({ description: 'Results per page' })
   readonly limit: number;
 
   @IsInt()
   @IsOptional()
+  @ApiProperty({ description: 'Total items for selected filters' })
   readonly total?: number;
 
   @IsString()
+  @ApiPropertyOptional({
+    description: 'Order by many fields with ([+-]{fieldName})+',
+    example: '-field1+field2',
+  })
   readonly order: string;
 
   public static fromGenericListInterface<EntityType, DtoType>(
@@ -78,11 +90,13 @@ export class PaginatedListQuery
   @IsInt()
   @Min(0)
   @IsOptional()
+  @ApiPropertyOptional({ description: 'Page number' })
   readonly page?: number;
 }
 
 export class PaginatedList<DtoType> extends GenericList<DtoType> {
   @IsInt()
+  @ApiProperty({ description: 'Current page' })
   readonly page: number;
 
   @ValidateNested()
