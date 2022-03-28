@@ -63,7 +63,7 @@ $ docker compose --env-file .env.local down
 ```
 
 ### Endpoints
-All endpoints have swagger documentation available on `/docs` route.
+All endpoints have OpenAPI documentation available on `/docs` route.
 
 1. Login: `auth/login` POST
 2. Sign up: `auth/signup` POST
