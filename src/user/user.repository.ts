@@ -1,14 +1,26 @@
 import { EntityNotFoundError, EntityRepository, Repository } from 'typeorm';
-import { UserEntity } from '../entities/user.entity';
+import { UserEntity, UserRelations } from '../entities/user.entity';
 import { ConflictException, NotFoundException } from '@nestjs/common';
 import { UserCreateDto } from './dto/user.create.dto';
 import { hash } from 'bcrypt';
 
 @EntityRepository(UserEntity)
 export class UserRepository extends Repository<UserEntity> {
-  async getById(id: string): Promise<UserEntity> {
+  async getById(
+    id: string,
+    options: {
+      relations?: UserRelations[];
+    } = {},
+  ): Promise<UserEntity> {
     try {
-      return await this.findOneOrFail({ id });
+      return await this.findOneOrFail(
+        {
+          id,
+        },
+        {
+          relations: options.relations,
+        },
+      );
     } catch (e) {
       if (e instanceof EntityNotFoundError) {
         throw new NotFoundException('User not found');
