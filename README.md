@@ -66,7 +66,8 @@ $ docker compose --env-file .env.local down
 1. Login: `auth/login` POST
 2. Sign up: `auth/signup` POST
 3. Me: `user/me` GET
-4. 
+4. List carbon certificates: `carbon-certificate` GET
+5. Transfer carbon certificate: `carbon-certificate/transfer/<id>` PATCH
 
 ## Test
 Before running commands below, copy `.env.example` to `.env.test` and set the values.
@@ -76,12 +77,7 @@ Before running commands below, copy `.env.example` to `.env.test` and set the va
 $ yarn run test
 
 # e2e tests
-# start database
-$ docker compose -f docker-compose.test.yml --env-file .env.test up -d
-# start E2E tests
 $ yarn run test:e2e
-# shut down database
-$ docker compose -f docker-compose.test.yml --env-file .env.test down
 
 # test coverage
 $ yarn run test:cov

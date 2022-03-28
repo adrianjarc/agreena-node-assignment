@@ -23,8 +23,8 @@ describe('AuthController (e2e)', () => {
         password: 'T3stP4ssw0rd!',
       })
       .expect(401)
-      .expect((res) => {
-        expect(res.body).toHaveProperty(
+      .expect(({ body }) => {
+        expect(body).toHaveProperty(
           'message',
           'Username or password incorrect',
         );
@@ -39,8 +39,8 @@ describe('AuthController (e2e)', () => {
         password: 'T3stP4ssw0rd!',
       })
       .expect(201)
-      .expect((res) => {
-        expect(res.body).toHaveProperty('username', 'test');
+      .expect(({ body }) => {
+        expect(body).toHaveProperty('username', 'test');
       });
   });
 
@@ -52,8 +52,8 @@ describe('AuthController (e2e)', () => {
         password: 'T3stP4ssw0rd!',
       })
       .expect(409)
-      .expect((res) => {
-        expect(res.body).toHaveProperty(
+      .expect(({ body }) => {
+        expect(body).toHaveProperty(
           'message',
           'User with this username already exists',
         );
@@ -68,8 +68,8 @@ describe('AuthController (e2e)', () => {
         password: 'T3stP4ssw0rd!!',
       })
       .expect(401)
-      .expect((res) => {
-        expect(res.body).toHaveProperty(
+      .expect(({ body }) => {
+        expect(body).toHaveProperty(
           'message',
           'Username or password incorrect',
         );
@@ -84,8 +84,8 @@ describe('AuthController (e2e)', () => {
         password: 'T3stP4ssw0rd!',
       })
       .expect(200)
-      .expect((res) => {
-        expect(res.body).toHaveProperty('token');
+      .expect(({ body }) => {
+        expect(body).toHaveProperty('token');
       });
   });
 });

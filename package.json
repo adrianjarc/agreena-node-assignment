@@ -17,7 +17,7 @@
     "test:watch": "STAGE=test jest --watch",
     "test:cov": "STAGE=test jest --coverage",
     "test:debug": "STAGE=test node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "STAGE=test jest --config ./test/jest-e2e.json --runInBand",
+    "test:e2e": "docker compose -f docker-compose.test.yml --env-file .env.test up -d && sleep 10 && STAGE=test jest --config ./test/jest-e2e.json --runInBand --forceExit; docker compose -f docker-compose.test.yml --env-file .env.test down",
     "migrations:create": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:create -d src/migrations -n",
     "migrations:generate": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:generate -d src/migrations -n",
     "migrations:run": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:run",

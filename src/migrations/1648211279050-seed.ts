@@ -70,6 +70,14 @@ VALUES ${certs
           })`,
       )
       .join(', ')}`);
+
+    if (process.env.STAGE === 'test') {
+      await queryRunner.query(`INSERT INTO "users"("id", "username", "password")
+VALUES ('6895df0f-65ad-4ed3-b188-f8d029b261ff', e'testUserNoCert', e'${password}'), ('2666e4ee-1028-4b16-a633-872421979fe7', e'testUserCerts', e'${password}')`);
+
+      await queryRunner.query(`INSERT INTO "carbon_certificates"("status", "country", "ownerId")
+VALUES (e'${CarbonCertificateStatusEnum.OWNED}', e'SLO', '2666e4ee-1028-4b16-a633-872421979fe7'), (e'${CarbonCertificateStatusEnum.OWNED}', e'SLO', '2666e4ee-1028-4b16-a633-872421979fe7'), (e'${CarbonCertificateStatusEnum.TRANSFERRED}', e'SLO', '2666e4ee-1028-4b16-a633-872421979fe7')`);
+    }
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
