@@ -12,6 +12,6 @@ export class UserController {
 
   @Get('me')
   async me(@User() user: UserEntity): Promise<UserDetailsDto> {
-    return UserDetailsDto.fromUserEntity(user);
+    return await this.userService.getUserWithCertificates(user.id);
   }
 }

@@ -9,6 +9,8 @@ import {
 import { EntitiesEnum } from '../common/enum/entities.enum';
 import { CarbonCertificateEntity } from './carbon-certificate.entity';
 
+export type UserRelations = 'carbonCertificates';
+
 @Entity('users')
 export class UserEntity {
   @PrimaryGeneratedColumn('uuid')

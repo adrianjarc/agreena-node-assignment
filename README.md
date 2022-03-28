@@ -28,6 +28,11 @@ Create the API containing endpoints:
 
 ### Good luck!
 
+## Description
+This is a test project for Agreena. It uses NodeJS v16.14.2 and PostgreSQL v14.2
+
+In node NestJS framework is used to create an API. To connct API and database TypeOrm is used.
+
 ## Installation
 This project is using yarn@3.2.0
 
@@ -36,6 +41,9 @@ $ yarn install
 ```
 
 ## Running the app
+Before running commands below, copy `.env.example` to `.env.local` and set the values.
+
+Once app is running endpoints will be available at `http://localhost:<PORT>/<endpoint>`
 
 ```bash
 # start database
@@ -49,9 +57,20 @@ $ yarn run start:dev
 
 # production mode
 $ yarn run start:prod
+
+# stop database
+$ docker compose --env-file .env.local down
 ```
 
+### Endpoints
+1. Login: `auth/login` POST
+2. Sign up: `auth/signup` POST
+3. Me: `user/me` GET
+4. List carbon certificates: `carbon-certificate` GET
+5. Transfer carbon certificate: `carbon-certificate/transfer/<id>` PATCH
+
 ## Test
+Before running commands below, copy `.env.example` to `.env.test` and set the values.
 
 ```bash
 # unit tests
@@ -63,3 +82,7 @@ $ yarn run test:e2e
 # test coverage
 $ yarn run test:cov
 ```
+
+## TODO
+- Tests
+- Swagger
