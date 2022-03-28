@@ -16,7 +16,17 @@ import { User } from '../common/decorator/user';
 import { UserEntity } from '../entities/user.entity';
 import { IdParamsDto } from '../common/dto/id.params.dto';
 import { CarbonCertificateTransferDto } from './dto/carbon-certificate.transfer.dto';
+import {
+  ApiBearerAuth,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
+import { ApiPaginatedListResponse } from '../common/decorator/api-paginated-list-response.decorator';
+import { ApiFilterQuery } from '../common/decorator/api-filter-query';
 
+@ApiTags('Carbon Certificates')
+@ApiBearerAuth()
 @Controller('carbon-certificate')
 @UseGuards(JwtAuthGuard)
 export class CarbonCertificateController {
@@ -24,6 +34,12 @@ export class CarbonCertificateController {
     private readonly carbonCertificateService: CarbonCertificateService,
   ) {}
 
+  @ApiOperation({ summary: 'List' })
+  @ApiFilterQuery('filters', CarbonCertificateFiltersDto)
+  @ApiPaginatedListResponse({
+    response: ApiOkResponse,
+    model: CarbonCertificateShortDto,
+  })
   @Get()
   async list(
     @Query() pagination: PaginatedListQuery,
@@ -45,6 +61,8 @@ export class CarbonCertificateController {
     );
   }
 
+  @ApiOperation({ summary: 'Transfer certificate' })
+  @ApiOkResponse({ type: CarbonCertificateShortDto })
   @Patch('transfer/:id')
   async transferCertificate(
     @Param() params: IdParamsDto,

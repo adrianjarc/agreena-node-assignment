@@ -63,6 +63,8 @@ $ docker compose --env-file .env.local down
 ```
 
 ### Endpoints
+All endpoints have OpenAPI documentation available on `/docs` route.
+
 1. Login: `auth/login` POST
 2. Sign up: `auth/signup` POST
 3. Me: `user/me` GET
@@ -82,7 +84,3 @@ $ yarn run test:e2e
 # test coverage
 $ yarn run test:cov
 ```
-
-## TODO
-- Tests
-- Swagger
